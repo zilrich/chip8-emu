@@ -3,17 +3,17 @@
 #include "../inc/utils.h"
 
 int reginit() {
-    char V[0xF] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    u8 V[0xF] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-    short I = 0;
+    u16 I = 0;
 
-    char DT = 0;
-    char ST = 0;
+    u8 DT = 0;
+    u8 ST = 0;
 
-    short PC = 0x200;
+    u16 PC = 0x200;
 
-    char SP = 0;
-    short stack[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    u8 SP = 0;
+    u16 stack[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     return 0;
 }

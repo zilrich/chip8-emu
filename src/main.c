@@ -11,7 +11,7 @@ bool framebuffer[FB_HEIGHT][FB_WIDTH];
 pthread_t timerthread;
 
 int main() {
-    short *mem = malloc(0x7FF);
+    u16 *mem = malloc(0x7FF);
     loadrom(mem);
     reginit();
     pthread_create(&timerthread, NULL, timers, NULL);

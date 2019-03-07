@@ -9,7 +9,7 @@
 
 int exec() {
     bool increment = 1;
-    short *addr = mem + PC;
+    u16 *addr = mem + PC;
     if (*addr == 0x0000) return 0;
     switch (OP) {
         case 0x0:
@@ -64,11 +64,11 @@ int exec() {
                     V[X] = V[X] ^ V[Y];
                     break;//ADD
                 case 0x4:
-                    V[0xF] = ( (short) V[X] + V[Y] > 255) ? 1: 0;
+                    V[0xF] = ( (u16) V[X] + V[Y] > 255) ? 1: 0;
                     V[X] = V[X] + V[Y];
                     break;
                 case 0x5://SUB
-                    V[0xF] = ( (short) V[X] > V[Y]) ? 1: 0;
+                    V[0xF] = ( (u16) V[X] > V[Y]) ? 1: 0;
                     V[X] = V[X] - V[Y];
                     break;
                 case 0x6://SHR
@@ -96,7 +96,7 @@ int exec() {
             increment = 0;
             break;
         case 0xC://RND
-            V[X] = (char) (rand() % 256) & KK;
+            V[X] = (u8) (rand() % 256) & KK;
             break;
         case 0xD://TODO: DRW
             draw(X, Y, N);

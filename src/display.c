@@ -40,10 +40,10 @@ int displayrefresh() {
     return 0;
 }
 
-int draw(char x, char y, short size) {
-    for (short i = 0; i < size; i++) {
-        short *addr = mem + I + i;
-        char *target = &framebuffer[y + i][x];
+int draw(u8 x, u8 y, u16 size) {
+    for (u16 i = 0; i < size; i++) {
+        u16 *addr = mem + I + i;
+        u8 *target = &framebuffer[y + i][x];
         *target = *addr;
     }
 
