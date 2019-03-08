@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include <string.h>
 #include <pthread.h>
 #include <ncurses.h>
-#include "../inc/display.h"
-#include "../inc/utils.h"
+#include "../inc/header.h"
 
-bool framebuffer[FB_HEIGHT][FB_WIDTH];
+extern bool framebuffer[FB_HEIGHT][FB_WIDTH];
 pthread_t timerthread;
 
 int main() {
@@ -18,6 +18,8 @@ int main() {
     displayinit();
     while(exec(mem));
     free(mem);
+    printf("for some reason finished\n");
+    sleep(2);
     endwin();
 
     return 0;

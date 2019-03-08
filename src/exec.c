@@ -3,11 +3,11 @@
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
-#include <pthread.h>
-#include "../inc/utils.h"
-#include "../inc/display.h"
+#include "../inc/header.h"
 
-int exec() {
+extern bool framebuffer[FB_HEIGHT][FB_WIDTH];
+
+int exec(u16 *mem) {
     bool increment = 1;
     u16 *addr = mem + PC;
     if (*addr == 0x0000) return 0;
@@ -99,7 +99,7 @@ int exec() {
             V[X] = (u8) (rand() % 256) & KK;
             break;
         case 0xD://TODO: DRW
-            draw(X, Y, N);
+            draw(mem, X, Y, N);
             break;
         case 0xE://TODO: input
             break;

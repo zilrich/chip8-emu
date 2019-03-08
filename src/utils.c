@@ -1,6 +1,20 @@
 #include <stdio.h>
 #include <unistd.h>
-#include "../inc/utils.h"
+#include "../inc/header.h"
+
+u16 *mem;
+
+u8 V[0xF];
+
+u16 I;
+
+u8 DT;
+u8 ST;
+
+u16 PC;
+
+u8 SP;
+u16 stack[16];
 
 int reginit() {
     u8 V[0xF] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -18,8 +32,8 @@ int reginit() {
     return 0;
 }
 
-int loadrom() {
-    FILE *rom = fopen("rom.ch8", "r");
+int loadrom(u16 *mem) {
+    FILE *rom = fopen("./rom.ch8", "r");
     fseek(rom, 0, SEEK_END);
     long int size = ftell(rom);
     fseek(rom, 0, SEEK_SET);

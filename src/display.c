@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <ncurses.h>
-#include "../inc/utils.h"
-#include "../inc/display.h"
+#include "../inc/header.h"
+
+bool framebuffer[FB_HEIGHT][FB_WIDTH];
 
 int displayinit() {
     initscr();
@@ -40,7 +41,7 @@ int displayrefresh() {
     return 0;
 }
 
-int draw(u8 x, u8 y, u16 size) {
+int draw(u16 *mem, u8 x, u8 y, u16 size) {
     for (u16 i = 0; i < size; i++) {
         u16 *addr = mem + I + i;
         u8 *target = &framebuffer[y + i][x];

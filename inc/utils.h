@@ -23,6 +23,6 @@ extern u8 SP;
 extern u16 stack[16];
 
 int reginit();
-int loadrom();
+int loadrom(u16 *mem);
 void *timers(void *param);
-int exec();
+int exec(u16 *mem);
