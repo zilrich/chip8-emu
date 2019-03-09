@@ -8,17 +8,18 @@
 #include "../inc/header.h"
 
 extern bool framebuffer[FB_HEIGHT][FB_WIDTH];
+extern int counter;
 pthread_t timerthread;
 
 int main() {
-    u16 *mem = malloc(0x7FF);
+    u8 *mem = malloc(0xFFF);
     loadrom(mem);
     reginit();
     pthread_create(&timerthread, NULL, timers, NULL);
-    displayinit();
+    //displayinit();
     while(exec(mem));
     free(mem);
-    printf("for some reason finished\n");
+    printf("executed %d intructions\n", counter);
     sleep(2);
     endwin();
 

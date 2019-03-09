@@ -41,11 +41,11 @@ int displayrefresh() {
     return 0;
 }
 
-int draw(u16 *mem, u8 x, u8 y, u16 size) {
+int draw(u8 *mem, u8 x, u8 y, u16 size) {
     for (u16 i = 0; i < size; i++) {
         u16 *addr = mem + I + i;
         u8 *target = &framebuffer[y + i][x];
-        *target = *addr;
+        *target = *target ^ *addr;
     }
 
     return 0;

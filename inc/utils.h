@@ -4,11 +4,12 @@
 #define X (*addr & 0x0F00 >> 8)
 #define Y (*addr & 0x00F0 >> 4)
 #define KK (*addr & 0x00FF)
+#define OFFSET 0x200
 
 typedef unsigned char u8;
 typedef unsigned short u16;
 
-extern u16 *mem;
+extern u8 *mem;
 
 extern u8 V[0xF];
 
@@ -23,6 +24,7 @@ extern u8 SP;
 extern u16 stack[16];
 
 int reginit();
-int loadrom(u16 *mem);
+int loadrom(u8 *mem);
 void *timers(void *param);
-int exec(u16 *mem);
+int exec(u8 *mem);
+//int log(char *message);

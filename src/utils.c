@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include "../inc/header.h"
 
-u16 *mem;
+u8 *mem;
 
 u8 V[0xF];
 
@@ -24,7 +24,7 @@ int reginit() {
     u8 DT = 0;
     u8 ST = 0;
 
-    u16 PC = 0x200;
+    u16 PC = OFFSET;
 
     u8 SP = 0;
     u16 stack[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -32,12 +32,12 @@ int reginit() {
     return 0;
 }
 
-int loadrom(u16 *mem) {
+int loadrom(u8 *mem) {
     FILE *rom = fopen("./rom.ch8", "r");
     fseek(rom, 0, SEEK_END);
     long int size = ftell(rom);
     fseek(rom, 0, SEEK_SET);
-    fread(mem, 1, size, rom);
+    fread(mem + OFFSET, 1, size, rom);
     fclose(rom);
 
     return 0;
@@ -50,4 +50,19 @@ void *timers(void *param) {
         usleep(16670);
     }
 }
+
+int fontsprites() {
+//    mem* = 
+
+    return 0;
+}
+
+/*int log(char *message) {
+    FILE *log = fopen("./log.txt", "a+");
+    fseek(log, 0, SEEK_END);
+    fputs(message, log);
+    fputc('\n', log);
+
+    return 0;
+}*/
 

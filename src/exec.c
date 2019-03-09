@@ -7,9 +7,13 @@
 
 extern bool framebuffer[FB_HEIGHT][FB_WIDTH];
 
-int exec(u16 *mem) {
+int counter = 0;
+
+int exec(u8 *mem) {
     bool increment = 1;
     u16 *addr = mem + PC;
+    *addr = (*addr >> 8) | (*addr << 8);
+    printf("%4X PC = %4X\n", *addr, PC);
     if (*addr == 0x0000) return 0;
     switch (OP) {
         case 0x0:
@@ -131,9 +135,10 @@ int exec(u16 *mem) {
             break;
     }
 
-    if(increment) PC += 2;
+    if (increment) PC += 2;
+    counter++;
     
-    displayrefresh();
+    //displayrefresh();
 
     return 1;
 }
