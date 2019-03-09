@@ -4,33 +4,17 @@
 
 u8 *mem;
 
-u8 V[0xF];
+u8 V[0xF] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
-u16 I;
+u16 I = 0;
 
-u8 DT;
-u8 ST;
+u8 DT = 0;
+u8 ST = 0;
 
-u16 PC;
+u16 PC = OFFSET;
 
-u8 SP;
-u16 stack[16];
-
-int reginit() {
-    u8 V[0xF] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-    u16 I = 0;
-
-    u8 DT = 0;
-    u8 ST = 0;
-
-    u16 PC = OFFSET;
-
-    u8 SP = 0;
-    u16 stack[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
-    return 0;
-}
+u8 SP = 0;
+u16 stack[16] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 int loadrom(u8 *mem) {
     FILE *rom = fopen("./rom.ch8", "r");

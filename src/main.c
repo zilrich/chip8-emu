@@ -14,7 +14,6 @@ pthread_t timerthread;
 int main() {
     u8 *mem = malloc(0xFFF);
     loadrom(mem);
-    reginit();
     pthread_create(&timerthread, NULL, timers, NULL);
     //displayinit();
     while(exec(mem));

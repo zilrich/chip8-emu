@@ -12,7 +12,7 @@ int counter = 0;
 int exec(u8 *mem) {
     bool increment = 1;
     u16 *addr = mem + PC;
-    *addr = (*addr >> 8) | (*addr << 8);
+    *addr =  __builtin_bswap16(*addr);
     printf("%4X PC = %4X\n", *addr, PC);
     if (*addr == 0x0000) return 0;
     switch (OP) {
