@@ -11,13 +11,13 @@ int counter = 0;
 
 int exec(u8 *mem) {
     bool increment = 1;
-    u16 *addr = mem + PC;
-    *addr =  __builtin_bswap16(*addr);
-    printf("%4X PC = %4X\n", *addr, PC);
-    if (*addr == 0x0000) return 0;
+    u16 *temp = mem + PC;
+    u16 addr =  __builtin_bswap16(*temp);
+    //printf("%4X PC = %4X\n", addr, PC);
+    if (addr == 0x0000) return 0;
     switch (OP) {
         case 0x0:
-            switch (*addr) {
+            switch (addr) {
                 case 0x00E0://CLS
                     memset(framebuffer, 0 , FB_SIZE);
                     break;

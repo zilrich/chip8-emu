@@ -15,12 +15,12 @@ int main() {
     u8 *mem = malloc(0xFFF);
     loadrom(mem);
     pthread_create(&timerthread, NULL, timers, NULL);
-    //displayinit();
+    displayinit();
     while(exec(mem));
     free(mem);
+    endwin();
     printf("executed %d intructions\n", counter);
     sleep(2);
-    endwin();
 
     return 0;
 }
