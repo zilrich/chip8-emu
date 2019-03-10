@@ -26,4 +26,5 @@ extern u16 stack[16];
 int loadrom(u8 *mem);
 void *timers(void *param);
 int exec(u8 *mem);
+int keymap();
 //int log(char *message);

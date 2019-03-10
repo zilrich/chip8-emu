@@ -1,16 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <string.h>
 #include <time.h>
+#include <unistd.h>
 #include "../inc/header.h"
 
 extern bool framebuffer[FB_HEIGHT][FB_WIDTH];
 
 int counter = 0;
 
+u8 key[256];
+
+int keymap() {
+    key[','] = 0x0;
+    key['7'] = 0x1;
+    key['8'] = 0x2;
+    key['9'] = 0x3;
+    key['u'] = 0x4;
+    key['i'] = 0x5;
+    key['o'] = 0x6;
+    key['j'] = 0x7;
+    key['k'] = 0x8;
+    key['l'] = 0x9;
+    key['m'] = 0xA;
+    key['.'] = 0xB;
+    key['0'] = 0xC;
+    key['p'] = 0xD;
+    key[';'] = 0xE;
+    key['/'] = 0xF;
+}
+
 int exec(u8 *mem) {
     bool increment = 1;
+    bool disupdate = 0;
+    char tempchar;
     u16 *temp = mem + PC;
     u16 addr =  __builtin_bswap16(*temp);
     //printf("%4X PC = %4X\n", addr, PC);
@@ -20,6 +43,7 @@ int exec(u8 *mem) {
             switch (addr) {
                 case 0x00E0://CLS
                     memset(framebuffer, 0 , FB_SIZE);
+                    disupdate = 1;
                     break;
                 case 0x00EE://RET
                     PC = stack[SP];
@@ -66,8 +90,8 @@ int exec(u8 *mem) {
                     break;
                 case 0x3://XOR
                     V[X] = V[X] ^ V[Y];
-                    break;//ADD
-                case 0x4:
+                    break;
+                case 0x4://ADD
                     V[0xF] = ( (u16) V[X] + V[Y] > 255) ? 1: 0;
                     V[X] = V[X] + V[Y];
                     break;
@@ -102,17 +126,26 @@ int exec(u8 *mem) {
         case 0xC://RND
             V[X] = (u8) (rand() % 256) & KK;
             break;
-        case 0xD://TODO: DRW
+        case 0xD://DRW
             draw(mem, X, Y, N);
+            disupdate = 1;
             break;
-        case 0xE://TODO: input
+        case 0xE:
+            switch (KK) {
+                case 0x9E:
+                    break;
+                case 0xA1:
+                    break;
+            }
             break;
         case 0xF:
             switch (KK) {
                 case 0x07://LD
                     V[X] = DT;
                     break;
-                case 0x0A://TODO: LD
+                case 0x0A://LD
+                    tempchar = getchar();
+                    V[X] = key[tempchar];
                     break;
                 case 0x15://LD
                     DT = V[X];
@@ -123,13 +156,23 @@ int exec(u8 *mem) {
                 case 0x1E://ADD
                     I += V[X];
                     break;
-                case 0x29://TODO: LD
+                case 0x29://LD
+                    I = X * 5;
                     break;
-                case 0x33://TODO: LD
+                case 0x33://LD
+                    *(mem + I) = X / 100;
+                    *(mem + I + 1) = (X / 10) % 10;
+                    *(mem + I + 2) = X % 10;
                     break;
-                case 0x55://TODO: LD
+                case 0x55://LD
+                    for (int i; i <= X; i++) {
+                        *(mem + I + i) = V[i];
+                    }
                     break;
-                case 0x65://TODO: LD
+                case 0x65://LD
+                    for (int i; i <= X; i++) {
+                        V[i] = *(mem + I + i);
+                    }
                     break;
             }
             break;
@@ -137,8 +180,8 @@ int exec(u8 *mem) {
 
     if (increment) PC += 2;
     counter++;
-    
-    //displayrefresh();
+    int zero = 0;
+    if (disupdate) displayrefresh();
 
     return 1;
 }
