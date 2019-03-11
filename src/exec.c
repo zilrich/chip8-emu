@@ -165,12 +165,12 @@ int exec(u8 *mem) {
                     *(mem + I + 2) = X % 10;
                     break;
                 case 0x55://LD
-                    for (int i; i <= X; i++) {
+                    for (int i = 0; i <= X; i++) {
                         *(mem + I + i) = V[i];
                     }
                     break;
                 case 0x65://LD
-                    for (int i; i <= X; i++) {
+                    for (int i = 0; i <= X; i++) {
                         V[i] = *(mem + I + i);
                     }
                     break;
