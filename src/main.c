@@ -3,21 +3,19 @@
 #include <unistd.h>
 #include <string.h>
 #include <pthread.h>
-#include <ncurses.h>
 #include "../inc/header.h"
 
 extern int counter;
 pthread_t timerthread;
 
-int main() {
+int main(int argc, char *argv[]) {
     u8 *mem = malloc(0xFFF);
-    loadrom(mem);
+    loadrom(mem, argv[1]);
     pthread_create(&timerthread, NULL, timers, NULL);
     keymap();
-    //displayinit();
+    displayinit();
     while(exec(mem));
     free(mem);
-    endwin();
     printf("executed %d intructions\n", counter);
     sleep(2);
 

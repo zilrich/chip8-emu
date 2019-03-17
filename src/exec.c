@@ -3,9 +3,12 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
+#include <SDL2/SDL.h>
 #include "../inc/header.h"
 
-extern bool framebuffer[FB_HEIGHT][FB_WIDTH];
+extern bool framebuffer[FB_WIDTH][FB_HEIGHT];
+
+SDL_Event event;
 
 int counter = 0;
 
@@ -37,6 +40,11 @@ int exec(u8 *mem) {
     u16 *temp = mem + PC;
     u16 addr =  __builtin_bswap16(*temp);
     //printf("%4X PC = %4X\n", addr, PC);
+
+    while(SDL_PollEvent(&event)) {
+        if (event.type == SDL_QUIT)
+        return 0;
+    }
     if (addr == 0x0000) return 0;
     switch (OP) {
         case 0x0:
@@ -48,7 +56,6 @@ int exec(u8 *mem) {
                 case 0x00EE://RET
                     PC = stack[SP];
                     SP--;
-                    increment = 0;
                     break;
             }
             break;
@@ -75,7 +82,8 @@ int exec(u8 *mem) {
             V[X] = KK;
             break;
         case 0x7://ADD
-            V[X] = V[X] + KK;
+            V[X] += KK;
+            //printf("Vx = V[0x%1X] kk = 0x%2X\n", X, KK);
             break;
         case 0x8:
             switch (N) {
@@ -127,7 +135,7 @@ int exec(u8 *mem) {
             V[X] = (u8) (rand() % 256) & KK;
             break;
         case 0xD://DRW
-            draw(mem, X, Y, N);
+            draw(mem, V[X], V[Y], N);
             disupdate = 1;
             break;
         case 0xE:
@@ -165,12 +173,12 @@ int exec(u8 *mem) {
                     *(mem + I + 2) = X % 10;
                     break;
                 case 0x55://LD
-                    for (int i = 0; i <= X; i++) {
+                    for (u8 i = 0; i <= X; i++) {
                         *(mem + I + i) = V[i];
                     }
                     break;
                 case 0x65://LD
-                    for (int i = 0; i <= X; i++) {
+                    for (u8 i = 0; i <= X; i++) {
                         V[i] = *(mem + I + i);
                     }
                     break;

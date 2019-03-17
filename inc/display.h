@@ -6,4 +6,4 @@
 
 int displayinit();
 int displayrefresh();
-int draw(u8 *mem, u8 x, u8 y, u16 size);
+int draw(u8 *mem, u8 x, u8 y, u8 size);

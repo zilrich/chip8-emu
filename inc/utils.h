@@ -1,7 +1,7 @@
 #define OP (addr >> 12)
 #define N (addr & 0x000F)
-#define X (addr & 0x0F00 >> 8)
-#define Y (addr & 0x00F0 >> 4)
+#define X ((addr & 0x0F00) >> 8)
+#define Y ((addr & 0x00F0) >> 4)
 #define KK (addr & 0x00FF)
 #define NNN (addr & 0x0FFF)
 #define OFFSET 0x200
@@ -23,8 +23,7 @@ extern u16 PC;
 extern u8 SP;
 extern u16 stack[16];
 
-int loadrom(u8 *mem);
+int loadrom(u8 *mem, char *path);
 void *timers(void *param);
 int exec(u8 *mem);
 int keymap();
-//int log(char *message);
