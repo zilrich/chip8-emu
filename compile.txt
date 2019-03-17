@@ -1,0 +1,2 @@
+//can't be bothered with a Makefile
+gcc src/main.c src/display.c src/utils.c src/exec.c -o chip8 -I/usr/include/SDL2 -D_REENTRANT -lncurses -lpthread -L/usr/lib64 -lSDL2 
