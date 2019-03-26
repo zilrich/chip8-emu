@@ -11,7 +11,7 @@ typedef unsigned short u16;
 
 extern u8 *mem;
 
-extern u8 V[0xF];
+extern u8 V[0x10];
 
 extern u16 I;
 
@@ -21,9 +21,9 @@ extern u8 ST;
 extern u16 PC;
 
 extern u8 SP;
-extern u16 stack[16];
+extern u16 stack[0x10];
 
+int initdigits();
 int loadrom(u8 *mem, char *path);
 void *timers(void *param);
-int exec(u8 *mem);
-int keymap();
+int printmem();

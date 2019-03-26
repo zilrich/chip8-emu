@@ -37,7 +37,6 @@ int displayrefresh() {
                 rect.x = x * 10;
                 rect.y = y * 10;
                 SDL_RenderFillRect(renderer, &rect);
-                //printf("x = %d, y = %d\n", x, y);
             }
         }
     }
@@ -62,9 +61,8 @@ int draw(u8 *mem, u8 x, u8 y, u8 size) {
         if (wy == FB_WIDTH) wy = 0;
         for (u8 j = 0; j < 8; j++) {
             if (wx == FB_WIDTH) wx = 0;
-            if (framebuffer[wx][wy] & sprite[j][i]) V[0xF] = true;
+            if (framebuffer[wx][wy] && sprite[j][i]) V[0xF] = true;
             framebuffer[wx][wy] ^= sprite[j][i];
-            //if (framebuffer[wx][wy]) printf("draw @ %d ; %d\n", wx, wy);
             wx++;
         }
         wx = x;
