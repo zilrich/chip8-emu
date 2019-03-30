@@ -1,9 +1,4 @@
-#include <stdio.h>
-#include <string.h>
-#include <math.h>
-#include <unistd.h>
-#include <SDL2/SDL.h>
-#include "../inc/header.h"
+#include "../inc/display.h"
 
 bool framebuffer[FB_WIDTH][FB_HEIGHT];
 SDL_Renderer* renderer;
@@ -45,11 +40,12 @@ int displayrefresh() {
     return 0;
 }
 
-int draw(u8 *mem, u8 x, u8 y, u8 size) {
+int draw(u8 x, u8 y, u8 size) {
     bool sprite[8][size];
     bool temp = 0;
     u8 wx = x;
     u8 wy = y;
+    V[0xF] = false;
     
     for (u8 i = 0; i < size; i++) {
         for (u8 j = 0;  j < 8; j++){

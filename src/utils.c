@@ -1,24 +1,18 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdbool.h>
-#include <SDL2/SDL.h>
-#include "../inc/header.h"
+#include "../inc/utils.h"
 
-bool timer = false;
+bool timer;
 
-u8 *mem;
+u8 V[0x10];
 
-u8 V[0x10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+u16 I;
 
-u16 I = 0;
+u8 DT;
+u8 ST;
 
-u8 DT = 0;
-u8 ST = 0;
+u16 PC;
 
-u16 PC = OFFSET;
-
-u8 SP = 0;
-u16 stack[0x10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+u8 SP;
+u16 stack[0x10];
 
 u8 digits[] = {0xF0, 0x90, 0x90, 0x90, 0xF0, //0
                0x20, 0x60, 0x20, 0x20, 0x70, //1
@@ -37,7 +31,7 @@ u8 digits[] = {0xF0, 0x90, 0x90, 0x90, 0xF0, //0
                0xF0, 0x80, 0xF0, 0x80, 0xF0, //E
                0xF0, 0x80, 0xF0, 0x80, 0x80};//F
 
-int loadrom(u8 *mem, char *path) {
+int loadrom(char *path) {
     FILE *rom = fopen(path, "r");
     fseek(rom, 0, SEEK_END);
     long int size = ftell(rom);
@@ -57,10 +51,11 @@ void *timers(void *param) {
     }
 }
 
-int initdigits(u8 *mem) {
+int initdigits() {
     for (u8 i = 0; i < 80; i++) {
         *(mem + i) = digits[i];
     }
+    PC = OFFSET;
 
     return 0;
 }
@@ -68,7 +63,7 @@ int initdigits(u8 *mem) {
 int printmem() {
     for (int i = 0; i < 16; i++) {
         printf("V[%d]: %d       ", i, V[i]);
-        if (i == 0) printf("PC: %d", PC);
+        if (i == 0) printf("PC: %3X", PC);
         else if (i == 1) printf("I: %d", I);
         printf("\n");
     }
