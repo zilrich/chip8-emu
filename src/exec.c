@@ -253,4 +253,5 @@ u16 keypress(bool state) {
             keypressed[0x11] = state;
             return 0x10;
     }
+	return 0;
 }
