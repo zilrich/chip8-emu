@@ -54,5 +54,7 @@ dkms.conf
 # Project specific
 .vscode
 .tags
+/obj/
+/dep/
 chip8
 *.ch8
