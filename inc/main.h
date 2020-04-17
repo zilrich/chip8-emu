@@ -6,13 +6,12 @@
 #include <pthread.h>
 #include "types.h"
 
-extern int counter;
-pthread_t timerthread;
+pthread_t timer_thread;
 
-int exec();
+int Exec();
 
-int loadrom(char *path);
-void *timers(void *param);
-int initdigits();
+int LoadROM(char *path);
+void timers();
+int InitDigits();
 
-int displayinit();
+int DisplayInint();

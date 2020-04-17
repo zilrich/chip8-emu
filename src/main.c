@@ -5,12 +5,12 @@ bool debug;
 
 int main(int argc, char *argv[]) {
     mem = malloc(0x1000);
-    loadrom(argv[1]);
-    pthread_create(&timerthread, NULL, timers, NULL);
-    initdigits();
-    displayinit();
+    LoadROM(argv[1]);
+    pthread_create(&timer_thread, NULL, timers, NULL);
+    InitDigits();
+    DisplayInint();
     if (argc == 3) if (*argv[2] == 'd') debug = true;
-    while (exec());
+    while (Exec());
     free(mem);
 
     return 0;

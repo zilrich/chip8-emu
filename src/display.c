@@ -4,7 +4,7 @@ bool framebuffer[FB_WIDTH][FB_HEIGHT];
 SDL_Renderer* renderer;
 SDL_Window* window;
 
-int displayinit() {
+int DisplayInint() {
     SDL_Init(SDL_INIT_EVERYTHING);
     window = SDL_CreateWindow("chip8", 0, 0, 640, 320, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );
@@ -16,7 +16,7 @@ int displayinit() {
     return 0;
 }
 
-int displayrefresh() {
+int DisplayRefresh() {
     SDL_Rect rect;
     rect.x = 0;
     rect.y = 0;
@@ -40,13 +40,13 @@ int displayrefresh() {
     return 0;
 }
 
-int draw(u8 x, u8 y, u8 size) {
+int Draw(u8 x, u8 y, u8 size) {
     bool sprite[8][size];
     bool temp = 0;
     u8 wx = x;
     u8 wy = y;
     V[0xF] = false;
-    
+
     for (u8 i = 0; i < size; i++) {
         for (u8 j = 0;  j < 8; j++){
             temp = (*(mem + I + i) & (0x80 >> j)) >> (7 - j);

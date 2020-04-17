@@ -31,7 +31,7 @@ u8 digits[] = {0xF0, 0x90, 0x90, 0x90, 0xF0, //0
                0xF0, 0x80, 0xF0, 0x80, 0xF0, //E
                0xF0, 0x80, 0xF0, 0x80, 0x80};//F
 
-int loadrom(char *path) {
+int LoadROM(char *path) {
     FILE *rom = fopen(path, "r");
     fseek(rom, 0, SEEK_END);
     long int size = ftell(rom);
@@ -51,7 +51,7 @@ void *timers(void *param) {
     }
 }
 
-int initdigits() {
+int InitDigits() {
     for (u8 i = 0; i < 80; i++) {
         *(mem + i) = digits[i];
     }
@@ -60,7 +60,7 @@ int initdigits() {
     return 0;
 }
 
-int printmem() {
+int PrintMem() {
     for (int i = 0; i < 16; i++) {
         printf("V[%d]: %d       ", i, V[i]);
         if (i == 0) printf("PC: %3X", PC);
