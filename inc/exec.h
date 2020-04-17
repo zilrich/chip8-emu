@@ -17,7 +17,7 @@
 #define FB_HEIGHT 32
 #define FB_SIZE FB_WIDTH * FB_HEIGHT
 
-u16 Keypress(bool state);
+u8 Keypress();
 int PrintMem();
 
 int DisplayInint();
@@ -42,3 +42,11 @@ extern u8 SP;
 extern u16 stack[0x10];
 
 extern bool debug;
+
+const SDL_Scancode kKeyMap[] = {
+    SDL_SCANCODE_X, SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3,
+    SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_A,
+    SDL_SCANCODE_S, SDL_SCANCODE_D, SDL_SCANCODE_Z, SDL_SCANCODE_C,
+    SDL_SCANCODE_4, SDL_SCANCODE_R, SDL_SCANCODE_F, SDL_SCANCODE_V,
+    SDL_SCANCODE_P, SDL_SCANCODE_O
+};

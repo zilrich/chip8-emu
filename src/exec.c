@@ -10,18 +10,8 @@ int Exec() {
         PrintMem();
     }
 
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_QUIT:
-                return 0;
-            case SDL_KEYDOWN:
-                Keypress(true);
-                break;
-            case SDL_KEYUP:
-                Keypress(false);
-                break;
-        }
-    }
+    while (SDL_PollEvent(&event)) if (event.type == SDL_QUIT) return 0;
+    const u8 *pkKeyboardState = SDL_GetKeyboardState(NULL);
     if (instruction == 0x0000)	return 0;
     switch (OP) {
         case 0x0:
@@ -117,10 +107,10 @@ int Exec() {
         case 0xE:
             switch (KK) {
                 case 0x9E:
-                    if (key_pressed[V[X]]) PC += 2;
+                    if (pkKeyboardState[kKeyMap[V[X]]]) PC += 2;
                     break;
                 case 0xA1:
-                    if (!key_pressed[V[X]]) PC += 2;
+                    if (!pkKeyboardState[kKeyMap[V[X]]]) PC += 2;
                     break;
             }
             break;
@@ -133,7 +123,7 @@ int Exec() {
                     while (1) {
                         SDL_PollEvent(&event);
                         if (event.type == SDL_KEYDOWN) {
-                            u16 temp_key = Keypress(true);
+                            u16 temp_key = Keypress();
                             if (temp_key > 0x10) continue;
                             else {
                                 V[X] = temp_key;
@@ -179,13 +169,13 @@ int Exec() {
         while (1) {
             while (SDL_PollEvent(&event)) {
                 if (event.type == SDL_QUIT) return 0;
-                else if (event.type == SDL_KEYDOWN) Keypress(true);
             }
-            if (key_pressed[0x10]) {
+            pkKeyboardState = SDL_GetKeyboardState(NULL);
+            if (pkKeyboardState[kKeyMap[0x10]]) {
                 usleep(250000);
                 break;
             }
-            else if (key_pressed[0x11]) {
+            else if (pkKeyboardState[kKeyMap[0x11]]) {
                 usleep(5000);
                 break;
             }
@@ -195,62 +185,26 @@ int Exec() {
     return 1;
 }
 
-u16 Keypress(bool state) {
-    switch (event.key.keysym.sym){
-        case SDLK_x:
-            key_pressed[0x0] = state;
-            return 0x0;
-        case SDLK_1:
-            key_pressed[0x1] = state;
-            return 0x1;
-        case SDLK_2:
-            key_pressed[0x2] = state;
-            return 0x2;
-        case SDLK_3:
-            key_pressed[0x3] = state;
-            return 0x3;
-        case SDLK_q:
-            key_pressed[0x4] = state;
-            return 0x4;
-        case SDLK_w:
-            key_pressed[0x5] = state;
-            return 0x5;
-        case SDLK_e:
-            key_pressed[0x6] = state;
-            return 0x6;
-        case SDLK_a:
-            key_pressed[0x7] = state;
-            return 0x7;
-        case SDLK_s:
-            key_pressed[0x8] = state;
-            return 0x8;
-        case SDLK_d:
-            key_pressed[0x9] = state;
-            return 0x9;
-        case SDLK_z:
-            key_pressed[0xA] = state;
-            return 0xA;
-        case SDLK_c:
-            key_pressed[0xB] = state;
-            return 0xB;
-        case SDLK_4:
-            key_pressed[0xC] = state;
-            return 0xC;
-        case SDLK_r:
-            key_pressed[0xD] = state;
-            return 0xD;
-        case SDLK_f:
-            key_pressed[0xE] = state;
-            return 0xE;
-        case SDLK_v:
-            key_pressed[0xF] = state;
-            return 0xF;
-        case SDLK_p:
-            key_pressed[0x10] = state;
-            return 0x10;
-        case SDLK_o:
-            key_pressed[0x11] = state;
-            return 0x10;
+u8 Keypress() {
+    switch (event.key.keysym.scancode){
+        case SDL_SCANCODE_X: return 0x0;
+        case SDL_SCANCODE_1: return 0x1;
+        case SDL_SCANCODE_2: return 0x2;
+        case SDL_SCANCODE_3: return 0x3;
+        case SDL_SCANCODE_Q: return 0x4;
+        case SDL_SCANCODE_W: return 0x5;
+        case SDL_SCANCODE_E: return 0x6;
+        case SDL_SCANCODE_A: return 0x7;
+        case SDL_SCANCODE_S: return 0x8;
+        case SDL_SCANCODE_D: return 0x9;
+        case SDL_SCANCODE_Z: return 0xA;
+        case SDL_SCANCODE_C: return 0xB;
+        case SDL_SCANCODE_4: return 0xC;
+        case SDL_SCANCODE_R: return 0xD;
+        case SDL_SCANCODE_F: return 0xE;
+        case SDL_SCANCODE_V: return 0xF;
+        case SDL_SCANCODE_P: return 0x10;
+        case SDL_SCANCODE_O: return 0x11;
+        default: return 0x12;
     }
-    return 0;
 }
