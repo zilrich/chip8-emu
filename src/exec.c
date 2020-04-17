@@ -3,10 +3,10 @@
 int Exec() {
     bool increment = 1;
     bool display_update = 0;
-    u16 *temp = (u16 *) mem + PC;
+    u16 *temp = (u16 *) (mem + PC);
     u16 instruction =  __builtin_bswap16(*temp);
     if (debug) {
-        printf("%4X PC = %4X\n", instruction, PC);
+        printf("%4X\n", instruction);
         PrintMem();
     }
 

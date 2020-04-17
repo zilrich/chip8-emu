@@ -11,7 +11,7 @@ pthread_t timer_thread;
 int Exec();
 
 int LoadROM(char *path);
-void timers();
+void *timers(void *param);
 int InitDigits();
 
 int DisplayInint();
